@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wi-Fi Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Wi-Fi Manager</h1>
+    </div>
+    <div class="container">
+        <h2>Available Wi-Fi Networks</h2>
+        <ul>
+            {% for network in networks %}
+            <li>
+                <form action="/connect" method="post">
+                    {{ network }}
+                    <input type="hidden" name="ssid" value="{{ network }}">
+                    <div class="input-container">
+                        <input type="password" name="password" placeholder="Password" id="password{{ loop.index }}">
+                        <span class="eye-icon" onclick="togglePassword('password{{ loop.index }}')"></span>
+                    </div>
+                    <button type="submit" class="connect-button"><i class="fas fa-wifi"></i> Connect</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Raspberry Pi Wi-Fi Manager</p>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
